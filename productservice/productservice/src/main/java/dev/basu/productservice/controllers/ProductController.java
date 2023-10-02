@@ -1,6 +1,7 @@
 package dev.basu.productservice.controllers;
 
 import dev.basu.productservice.dtos.GenericProductDto;
+import dev.basu.productservice.dtos.ProductDto;
 import dev.basu.productservice.exceptions.NotFoundException;
 import dev.basu.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductController {
     private ProductService productService;
 
@@ -19,31 +20,26 @@ public class ProductController {
         this.productService = productService;
     }
     @GetMapping
-    public List<GenericProductDto> getAllProducts()
+    public List<ProductDto> getAllProducts()
     {
         return productService.getAllProducts();
     }
     @GetMapping("{id}")
-    public GenericProductDto getProductById(@PathVariable("id") UUID id) throws NotFoundException {
-        return productService.getProductById(id);
+    public ProductDto getProductById(@PathVariable("id") UUID id) throws NotFoundException {
+        return productService.getProductById(String.valueOf(id));
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") UUID id) {
-        return new ResponseEntity<>(
-                productService.deleteProduct(id),
-                HttpStatus.OK
-        );
+    public ProductDto deleteProductById(@PathVariable("id") UUID id) throws NotFoundException {
+        return productService.deleteProduct(String.valueOf(id));
     }
 
     @PostMapping
-    public GenericProductDto createProduct(@RequestBody GenericProductDto product)
-    {
-        return productService.createProduct(product);
+    public ResponseEntity<?> createProduct(@RequestBody ProductDto product) {
+        return new ResponseEntity<>(productService.addonProduct(product),HttpStatus.CREATED);
     }
 
     @PutMapping("{id}")
-    public GenericProductDto updateProductById(@RequestBody GenericProductDto product, @PathVariable("id") UUID id) throws NotFoundException
-    {
-        return productService.updateProduct(product,id);
+    public  ProductDto updateProductById(@PathVariable("id") UUID id,@RequestBody ProductDto product) throws NotFoundException {
+        return  productService.updateProduct(product, String.valueOf(id));
     }
 }

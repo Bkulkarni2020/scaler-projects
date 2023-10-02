@@ -2,18 +2,14 @@ package dev.basu.productservice.services;
 
 import dev.basu.productservice.dtos.FakeStoreProductDto;
 import dev.basu.productservice.dtos.GenericProductDto;
+import dev.basu.productservice.dtos.ProductDto;
 import dev.basu.productservice.exceptions.NotFoundException;
-import dev.basu.productservice.models.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RequestCallback;
-import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,66 +37,51 @@ public class FakeStoreProductService implements ProductService {
         return product;
     }
 
-    @Override
-    public GenericProductDto createProduct(GenericProductDto product) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity<GenericProductDto> response = restTemplate.postForEntity(
-                productRequestsBaseUrl, product, GenericProductDto.class
-        );
 
-        return response.getBody();
+    @Override
+    public List<ProductDto> getAllProducts() {
+        return null;
     }
 
     @Override
-    public GenericProductDto getProductById(UUID id) throws NotFoundException {
+    public List<String> getAllCategories() {
+        return null;
+    }
+
+    @Override
+    public ProductDto getProductById(String id) throws NotFoundException {
+        return null;
+    }
+
+    @Override
+    public List<ProductDto> getProductsByCategory(String category) throws NotFoundException {
+        return null;
+    }
+
+    @Override
+    public ProductDto addonProduct(ProductDto productDto) {
+        return null;
+    }
+
+    @Override
+    public ProductDto updateProduct(ProductDto productDto, String id) throws NotFoundException {
+        return null;
+    }
+
+    @Override
+    public ProductDto deleteProduct(String id) throws NotFoundException {
         return null;
     }
 
 //    @Override
-//    public GenericProductDto getProductById(Long id) throws NotFoundException {
-////        FakeStoreProductService fakeStoreProductService = new FakeStoreProductService();
-//        RestTemplate restTemplate = restTemplateBuilder.build();
-//        ResponseEntity<FakeStoreProductDto> response =
-//                restTemplate.getForEntity(specificProductRequestUrl, FakeStoreProductDto.class, id);
-//
-//        FakeStoreProductDto fakeStoreProductDto = response.getBody();
-//
-//        if (fakeStoreProductDto == null) {
-//            throw new NotFoundException("Product with id: " + id + " doesn't exist.");
-//        }
-//
-////        response.getStatusCode()
-//
-//        return convertFakeStoreProductIntoGenericProduct(fakeStoreProductDto);
-////        return null;
+//    public GenericProductDto deleteProduct(UUID id) {
+//        return null;
 //    }
-
-    @Override
-    public List<GenericProductDto> getAllProducts() {
-        RestTemplate restTemplate = restTemplateBuilder.build();
-
-        ResponseEntity<FakeStoreProductDto[]> response =
-                restTemplate.getForEntity(productRequestsBaseUrl, FakeStoreProductDto[].class);
-
-        List<GenericProductDto> answer = new ArrayList<>();
-
-        for ( FakeStoreProductDto fakeStoreProductDto: response.getBody()) {
-
-            answer.add(convertFakeStoreProductIntoGenericProduct(fakeStoreProductDto));
-        }
-
-        return answer;
-    }
-
-    @Override
-    public GenericProductDto deleteProduct(UUID id) {
-        return null;
-    }
-
-    @Override
-    public GenericProductDto updateProduct(GenericProductDto product, UUID id) throws NotFoundException {
-        return null;
-    }
+//
+//    @Override
+//    public GenericProductDto updateProduct(GenericProductDto product, UUID id) throws NotFoundException {
+//        return null;
+//    }
 
 //    @Override
 //    public GenericProductDto deleteProduct(Long id) {

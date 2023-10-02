@@ -1,8 +1,8 @@
 package dev.basu.productservice.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.dialect.function.TruncFunction;
 import org.hibernate.id.factory.spi.GenerationTypeStrategy;
@@ -13,8 +13,11 @@ import java.util.Date;
 import java.util.UUID;
 
 @MappedSuperclass
-@Getter
 @Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
 public class BaseModel {
     @Id
     @GeneratedValue(generator = "basayya")

@@ -53,9 +53,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto updateCategory(CategoryDto category, UUID id) throws NotFoundException {
-        Category saveCategory= CategoryMapper.mapperToCategoryModel(category);
-        Category result= categoryRepository.save(saveCategory);
-        CategoryDto resultDto=CategoryMapper.mapperToCategoryDto(result);
+        Optional<Category> result = categoryRepository.findById(id);
+        CategoryDto resultDto=null;
+        if(result.get()!=null) {
+            Category saveCategory= CategoryMapper.mapperToCategoryModel(category);
+            Category saveCategoryResult= categoryRepository.save(saveCategory);
+            resultDto=CategoryMapper.mapperToCategoryDto(saveCategoryResult);
+        }
         return resultDto;
     }
 }
